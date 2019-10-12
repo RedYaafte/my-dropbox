@@ -3,8 +3,10 @@ from rest_framework import serializers
 from .models import Box
 
 
-class BoxSerializers(serializers.ModelSerializer):
+class BoxSerializers(serializers.Serializer):
+    title = serializers.CharField()
+    description = serializers.CharField(required=False)
+    thing = serializers.FileField(required=False)
 
-    class Meta:
-        model = Box
-        fields = ['pk', 'title', 'description', 'created', 'modified']
+    def create(self, validated_data):
+        return Box.objects.create(**validated_data)
