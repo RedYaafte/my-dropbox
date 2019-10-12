@@ -1,10 +1,13 @@
 from django.urls import path, include
 
-from rest_framework import routers
+from rest_framework.urlpatterns import format_suffix_patterns
 
-from .views import BoxViewSet
+from .views import box_list, box_detail
 
-router = routers.DefaultRouter()
-router.register(r'list', BoxViewSet, base_name='list')
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('box/', box_list),
+    path('box/<int:pk>/', box_detail),
+]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
