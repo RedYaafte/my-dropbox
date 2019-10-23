@@ -34,3 +34,14 @@ def box_detail(request, pk):
     if request.method == 'GET':
         serializer = BoxSerializers(box)
         return Response(serializer.data)
+    
+    elif request.method == 'PUT':
+        serializer = BoxSerializers(box, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        box.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
